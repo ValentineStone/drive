@@ -1,19 +1,44 @@
 <template>
-  <div>
-
-    <div flat dense class="headline text-xs-center">
-      Тест по категории {{category}}
-    </div>
-
-    <v-list v-if="questions.length">
-      <div v-for="question in questions" :key="question.id">
-        <Question :value="question"/>
-        <v-divider/>
+  <v-card flat>
+    <v-toolbar :class="[
+      'mb-3 elevation-2 accent--text',
+        $vuetify.dark ? undefined : 'secondary',
+    ]">
+      <v-spacer/>
+      <div :class="[
+        'text-xs-center',
+        $vuetify.breakpoint.xs ? 'headline' : 'display-1'
+      ]">
+        {{
+          category === 'free'
+          ? 'Пробный тест'
+          : 'Тест по категории ' + category
+        }}
       </div>
-    </v-list>
+      <v-spacer/>
+    </v-toolbar>
+
+
+
+      <v-container grid-list-md>
+      <v-layout wrap justify-center>
+
+    <template v-if="questions.length">
+      <template  v-for="(question, index) of questions" >
+        <v-flex xs12 sm10 md7 :key="question.id">
+          <v-divider v-if="index" :key="index" class="mb-4"/>
+          <Question :value="question"/>
+        </v-flex>
+      </template>
+    </template>
     <div v-else>В этом тесте нет вопросов</div>
 
-  </div>
+    
+
+      </v-layout>
+      </v-container>
+
+  </v-card>
 </template>
 
 <script>
@@ -26,18 +51,6 @@
           return this.$model.freeTestQuestions
         else
           return []
-      }
-    },
-    data() {
-      return {
-        items: [
-          { header: 'Today' },
-          { avatar: '/static/doc-images/lists/1.jpg', title: 'Brunch this weekend?', subtitle: "<span class='text--primary'>Ali Connors</span> — I'll be in your neighborhood doing errands this weekend. Do you want to hang out?" },
-          { divider: true, inset: true },
-          { avatar: '/static/doc-images/lists/2.jpg', title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>', subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> — Wish I could come, but I'm out of town this weekend." },
-          { divider: true, inset: true },
-          { avatar: '/static/doc-images/lists/3.jpg', title: 'Oui oui', subtitle: "<span class='text--primary'>Sandra Adams</span> — Do you have Paris recommendations? Have you ever been?" }
-        ]
       }
     },
     components: { Question }

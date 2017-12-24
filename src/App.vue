@@ -96,3 +96,35 @@
     margin-right: auto;
   }
 </style>
+
+
+
+<style>
+
+  /* THIS IS SSPARTAAA!!! */
+  /* 
+    This style sheet is here to fix vuetify's
+    radio buttons, it has to be global to work
+    on the elements inside vuetify components.
+    This here allows content to wrap inside labes.
+  */
+
+  .input-group.input-group--selection-controls.radio {
+    display: block !important;
+    min-height: max-content;
+    text-align: left;
+  }
+
+  .input-group.input-group--selection-controls.radio > label {
+    white-space: normal;
+    height: unset !important;
+    position: static !important;
+    padding-left: 30px;
+  }
+
+  .input-group.input-group--selection-controls.radio > div {
+    position: absolute !important;
+    top: 0;
+    z-index: -1;
+  }
+</style>

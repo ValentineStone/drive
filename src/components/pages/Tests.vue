@@ -1,23 +1,22 @@
 <template>
   <v-flex xs12>
     <v-card>
-      <v-card-text class="text-xs-center">
-        <div>
-          <v-btn fab flat small
+      <v-card-text :class="['text-xs-center', $vuetify.breakpoint.xs ? 'pa-1' : undefined]">
+        <div class="mb-3">
+          <v-btn fab flat :small="$vuetify.breakpoint.smAndDown"
             v-for="{ id } of $model.licenseCategories"
             :key="id"
-            :outline="$route.query.category === id"
+            :outline="selectedCategory === id"
             :to="{ query: { category: id } }"
 
             active-class=""
             class="ma-0"
             :color="$vuetify.dark ? 'accent' : 'primary'"
           >{{id}}</v-btn>
+          <div v-if="!selectedCategory">Выберите категорию</div>
         </div>
-        <div v-if="!$route.query.category">Выберите категорию</div>
-        <template v-if="$route.query.category">
-          <v-divider class="my-3"/>
-          <Test :category="$route.query.category" />
+        <template v-if="selectedCategory">
+          <Test :category="selectedCategory" />
         </template>
       </v-card-text>
     </v-card>
@@ -27,12 +26,12 @@
 <script>
   import Test from '@/components/Test'
   export default {
-    data() {
-      return {
-        selectedCategory: this.$route.query.category || 'A',
+    components: { Test },
+    computed: {
+      selectedCategory() {
+        return this.$route.query.category || ( this.$model.user ? 'B' : 'free' )
       }
-    },
-    components: { Test }
+    }
   }
 </script>
 
